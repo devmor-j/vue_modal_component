@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from "vue";
-// import TeleportModal from "@/components/TeleportModal.vue";
-import BaseModal from "@/components/BaseModal.vue";
+import TeleportModal from "@/components/TeleportModal.vue";
+// import BaseModal from "@/components/BaseModal.vue";
 
 const isModalVisible = ref(false);
 </script>
@@ -10,11 +10,11 @@ const isModalVisible = ref(false);
   <main class="container">
     <h1>App</h1>
 
-    <BaseModal
+    <!-- <BaseModal
       :is-visible="isModalVisible"
       @closemodal="isModalVisible = false"
     >
-    </BaseModal>
+    </BaseModal> -->
 
     <TeleportModal
       :is-visible="isModalVisible"
