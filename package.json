@@ -9,6 +9,7 @@
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore"
   },
   "dependencies": {
+    "@picocss/pico": "^1.5.3",
     "vue": "^3.2.37"
   },
   "devDependencies": {
