@@ -13,6 +13,8 @@ defineProps({
   },
 });
 
+defineEmits(["hidemodal"]);
+
 // isMobile is true when user is on a mobile device
 const { isMobile } = useMobile();
 

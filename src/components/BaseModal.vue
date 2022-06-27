@@ -5,6 +5,8 @@ defineProps({
     default: false,
   },
 });
+
+defineEmits(["hidemodal"]);
 </script>
 
 <template>
