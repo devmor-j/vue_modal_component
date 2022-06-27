@@ -10,12 +10,12 @@ const isModalVisible = ref(false);
   <main class="container">
     <h1>App</h1>
 
-    <!-- <BaseModal :is-visible="isModalVisible" @hidemodal="isModalVisible = false">
+    <!-- <BaseModal :is-visible="isModalVisible" @closemodal="isModalVisible = false">
     </BaseModal> -->
 
     <TeleportModal
       :is-visible="isModalVisible"
-      @hidemodal="isModalVisible = false"
+      @closemodal="isModalVisible = false"
     >
     </TeleportModal>
 

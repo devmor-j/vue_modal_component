@@ -1,6 +1,7 @@
 <script setup>
-import { computed } from "vue";
+import { computed, ref, watch } from "vue";
 import { useMobile } from "@/composables/useMobile.js";
+import { useClickOutside } from "@/composables/useClickOutside.js";
 
 defineProps({
   isVisible: {
@@ -13,7 +14,7 @@ defineProps({
   },
 });
 
-defineEmits(["hidemodal"]);
+const emits = defineEmits(["closemodal"]);
 
 // isMobile is true when user is on a mobile device
 const { isMobile } = useMobile();
@@ -21,19 +22,34 @@ const { isMobile } = useMobile();
 const checkMobile = computed(() => {
   return isMobile();
 });
+
+// when clicked on this target, emits to close modal
+const clickOutsideTarget = ref(null);
+
+const { onClickOutside } = useClickOutside();
+
+// returns a ref that can be watched, so when user clicks on target,
+// modal is closed; of course the target is the modal-wrapper.
+const isClickedOutside = onClickOutside(clickOutsideTarget);
+
+watch(isClickedOutside, (newValue) => {
+  if (newValue === true) {
+    emits("closemodal");
+  }
+});
 </script>
 
 <template>
   <Teleport to="body" :disabled="checkMobile">
     <Transition name="modal-fade" :css="showTransition">
-      <div class="modal-wrapper" v-if="isVisible">
+      <div class="modal-wrapper" v-if="isVisible" ref="clickOutsideTarget">
         <div class="modal" role="dialog">
           <header>
             <slot name="header">
               <h2>Modal Header</h2>
             </slot>
             <button
-              @click="$emit('hidemodal')"
+              @click="$emit('closemodal')"
               aria-label="Close modal"
               class="secondary"
               data-modal="close"

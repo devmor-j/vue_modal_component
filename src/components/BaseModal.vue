@@ -6,7 +6,7 @@ defineProps({
   },
 });
 
-defineEmits(["hidemodal"]);
+defineEmits(["closemodal"]);
 </script>
 
 <template>
