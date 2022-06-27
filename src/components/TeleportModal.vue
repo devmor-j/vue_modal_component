@@ -1,4 +1,7 @@
 <script setup>
+import { computed } from "vue";
+import { useMobile } from "@/composables/useMobile.js";
+
 defineProps({
   isVisible: {
     type: Boolean,
@@ -9,40 +12,54 @@ defineProps({
     default: true,
   },
 });
+
+// isMobile is true when user is on a mobile device
+const { isMobile } = useMobile();
+
+const checkMobile = computed(() => {
+  return isMobile();
+});
 </script>
 
 <template>
-  <Transition name="modal-fade" :css="showTransition">
-    <div class="modal-wrapper" v-if="isVisible">
-      <div class="modal" role="dialog">
-        <header>
-          <slot name="header">
-            <h2>Modal Header</h2>
-          </slot>
-          <button @click="$emit('hidemodal')" aria-label="Close modal">
-            &times;
-          </button>
-        </header>
+  <Teleport to="body" :disabled="checkMobile">
+    <Transition name="modal-fade" :css="showTransition">
+      <div class="modal-wrapper" v-if="isVisible">
+        <div class="modal" role="dialog">
+          <header>
+            <slot name="header">
+              <h2>Modal Header</h2>
+            </slot>
+            <button
+              @click="$emit('hidemodal')"
+              aria-label="Close modal"
+              class="secondary"
+              data-modal="close"
+            >
+              &times;
+            </button>
+          </header>
 
-        <section>
-          <slot name="body">
-            <h3>Modal Content</h3>
-            <p>
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quaerat
-              provident eaque officiis excepturi? Eum eaque officia perspiciatis
-              inventore tempora labore.
-            </p>
-          </slot>
-        </section>
+          <section>
+            <slot name="body">
+              <h3>Modal Content</h3>
+              <p>
+                Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                Quaerat provident eaque officiis excepturi? Eum eaque officia
+                perspiciatis inventore tempora labore.
+              </p>
+            </slot>
+          </section>
 
-        <div>
-          <slot name="footer">
-            <p>Footer</p>
-          </slot>
+          <div>
+            <slot name="footer">
+              <p>Footer</p>
+            </slot>
+          </div>
         </div>
       </div>
-    </div>
-  </Transition>
+    </Transition>
+  </Teleport>
 </template>
 
 <style scoped>
@@ -71,10 +88,14 @@ defineProps({
   align-items: center;
 }
 
-.modal button {
+.modal button[data-modal="close"] {
   font-size: 4ex;
   line-height: 1;
   user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
 }
 
 .modal-fade-enter-active,
