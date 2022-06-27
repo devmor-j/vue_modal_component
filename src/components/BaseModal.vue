@@ -1,4 +1,7 @@
 <script setup>
+import { ref, watch } from "vue";
+import { useClickOutside } from "@/composables/useClickOutside.js";
+
 defineProps({
   isVisible: {
     type: Boolean,
@@ -6,19 +9,34 @@ defineProps({
   },
 });
 
-defineEmits(["closemodal"]);
+const emits = defineEmits(["closemodal"]);
+
+// when clicked on this target, emits to close modal
+const clickOutsideTarget = ref(null);
+
+const { onClickOutside } = useClickOutside();
+
+// returns a ref that can be watched, so when user clicks on target,
+// modal is closed; of course the target is the modal-wrapper.
+const isClickedOutside = onClickOutside(clickOutsideTarget);
+
+watch(isClickedOutside, (newValue) => {
+  if (newValue === true) {
+    emits("closemodal");
+  }
+});
 </script>
 
 <template>
   <Transition name="modal-fade">
-    <div class="modal-wrapper" v-if="isVisible">
+    <div class="modal-wrapper" v-if="isVisible" ref="clickOutsideTarget">
       <div class="modal" role="dialog">
         <header>
           <slot name="header">
             <h2>Modal Header</h2>
           </slot>
           <button
-            @click="$emit('hidemodal')"
+            @click="$emit('closemodal')"
             class="secondary"
             aria-label="Close modal"
             data-modal="close"

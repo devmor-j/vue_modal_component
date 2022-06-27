@@ -40,6 +40,7 @@ watch(isClickedOutside, (newValue) => {
 </script>
 
 <template>
+  <!-- disable teleport on mobile devices -->
   <Teleport to="body" :disabled="checkMobile">
     <Transition name="modal-fade" :css="showTransition">
       <div class="modal-wrapper" v-if="isVisible" ref="clickOutsideTarget">
