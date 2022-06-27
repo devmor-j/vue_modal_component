@@ -107,7 +107,7 @@ const checkMobile = computed(() => {
   /* to enforce transitions for users with reduced-motion */
   /* add one !important to any transition property */
   /* note that picocss respects reduced-motion by default */
-  transition-duration: 0.2s;
+  transition-duration: 0.3s;
   transition-property: opacity, transform;
 }
 

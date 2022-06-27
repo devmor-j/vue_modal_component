@@ -19,7 +19,9 @@ const isModalVisible = ref(false);
     >
     </TeleportModal>
 
-    <button @click="isModalVisible = true">Show Modal</button>
+    <button :aria-busy="isModalVisible" @click="isModalVisible = true">
+      Show Modal
+    </button>
   </main>
 </template>
 
