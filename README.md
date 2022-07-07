@@ -8,7 +8,7 @@ Created using [Vue 3](https://vuejs.org/) and [PicoCSS](https://picocss.com/) wh
 
 - Both modal components can be closed by **clicking outside** of the modal-box
 - Shows aria-busy loading indicator when clicking on `Show Modal` button
-- In Firefox browsers, *backdrop* filter will not work until they implement this CSS property
+- In Firefox browsers, *backdrop* filter ~will not work until they implement this CSS property~ now works as of v103.0+
 - It is accessible and has semantic tags
 - Minimal styles and works without [PicoCSS](https://picocss.com/)
 
